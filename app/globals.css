@@ -3,25 +3,107 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #b0a3cc;
+  --foreground: #4a3f63;
+  --green: #0e4e40;
+  --primary: #364b45;
+  --accent: #98b0a9;
+  --secondary: #4a3f63;
+  --tertiary: #7b6f96;
+  --searchOutline:var(--secondary);
+  --resultText: black;
+  --searchHover: var(--tertiary);
+  --searchTextHover: white;
+  --buttonBg: white;
+  --buttonOutline: #7b6f96;
+  --backOutline: var(--secondary);
+  --backBg: white;
+  --buttonHoverOutline: var(--secondary);
+  --home:var(--background);
+  --title: white;
+}
+
+@layer base {
+  html {
+    font-family: "Fredoka", sans-serif;
+  }
+}
+
+@font-face {
+  font-family: 'Fredoka';
+  src: url('/fonts/Fredoka-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #364b45;
+    --foreground: #ffffff;
+    --primary: #364b45;
+    --accent: #98b0a9;
+    --secondary: #4a3f63;
+    --tertiary: #7b6f96;
+    --searchOutline: white;
+    --resultText: white;
+    --searchHover: var(--accent);
+    --searchTextHover: black;
+    --buttonBg: var(--tertiary);
+    --buttonOutline: var(--tertiary);
+    --backOutline: var(--secondary);
+    --backBg: var(--secondary);
+    --buttonHoverOutline: #e5e7eb;
+    --home: var(--accent);
+    --title: var(--primary);
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Fredoka';
 }
-
+button {
+  box-sizing: border-box;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer components {
+  .feature-container {
+    @apply flex ml-8 items-center border-b-2 border-b-secondary my-4 max-w-lg pb-2;
+  }
+  .primary-btns {
+    @apply rounded-full bg-buttonBg p-2 hover:bg-gray-200 hover:text-secondary my-3 max-sm:mx-auto outline-tertiary outline hover:outline-buttonHoverOutline -outline-offset-2;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .home-column {
+    width: 100%;
+    padding: 3rem 0;
+  }
+  h1 {
+    justify-content:center;
+  }
+  .home {
+    display: block;
+    min-width: 320px;
+    height:100%;
+  }
+  .second-col-content {
+    text-align: left;
+    margin: auto;
+    max-width: 350px;
+  }
+}
+@media (max-width: 1141px) {
+  .icons i:nth-child(2) {
+    padding: 2rem 0;
   }
 }

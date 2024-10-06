@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎵 Album Track Ranking Web App
 
-## Getting Started
+This web app allows users to select an album, view its tracks, rearrange the order using drag-and-drop, and create a custom Spotify playlist based on their preferred track ranking. It’s built using React, Next.js, and Spotify’s Web API.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Drag-and-Drop Track Reordering:** Easily rearrange the order of tracks from any album.
+- **Spotify Integration:** Authenticate with your Spotify account to view albums and create custom playlists.
+- **Custom Playlist Creation:** Save your reordered tracks into a new Spotify playlist directly from the app.
+- **Download Track Order as an Image:** Download a snapshot of your ordered track list as a `.png` file.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Built With
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Frontend:** React, Next.js, Tailwind CSS
+- **Backend:** Node.js, Express
+- **API Integration:** Spotify Web API
+- **Deployment:** Vercel (Frontend), Localhost for Backend
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 🖼️ Screenshots
 
-## Learn More
+| Main Interface | Drag-and-Drop Reordering | Custom Playlist Creation |
+|:--------------:|:-----------------------:|:------------------------:|
+| ![Main Interface](./assets/main-interface.png) | ![Reordering](./assets/reordering.png) | ![Playlist Creation](./assets/playlist-creation.png) |
 
-To learn more about Next.js, take a look at the following resources:
+## 🧑‍💻 Getting Started
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Prerequisites
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Node.js (>= 16.0.0)
+- A [Spotify Developer Account](https://developer.spotify.com/dashboard/) and a registered application to obtain client credentials.
 
-## Deploy on Vercel
+### Installation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone the repository:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```bash
+    git clone https://github.com/your-username/album-track-ranking.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd album-track-ranking
+    ```
+
+3. Install dependencies for both frontend and backend:
+
+    ```bash
+    npm install
+    cd client && npm install
+    ```
+
+4. Create an `.env` file in the root directory and add your Spotify client credentials:
+
+    ```bash
+    SPOTIFY_CLIENT_ID=your_spotify_client_id
+    SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+    ```
+
+### Running the App Locally
+
+1. **Start the backend server:**
+
+    In the root directory, run:
+
+    ```bash
+    npm run server
+    ```
+
+    This will start your backend on `http://localhost:3001`.
+
+2. **Start the frontend:**
+
+    In the `client` directory, run:
+
+    ```bash
+    npm run dev
+    ```
+
+    This will start your frontend on `http://localhost:3000`.
+
+3. **Access the app:** Open `http://localhost:3000` in your browser.
+
+### Folder Structure
+

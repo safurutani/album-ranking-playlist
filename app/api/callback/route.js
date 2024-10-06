@@ -10,7 +10,7 @@ export async function GET(request) {
 
   const client_id = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
   const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-  const redirect_uri =`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/callback`;
+  const redirect_uri =process.env.NEXT_PUBLIC_REDIRECT_URI;
 
   const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',

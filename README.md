@@ -20,7 +20,7 @@ This web app allows users to select an album, view its tracks, rearrange the ord
 
 | Main Interface | Drag-and-Drop Reordering | Custom Playlist Creation |
 |:--------------:|:-----------------------:|:------------------------:|
-| ![Main Interface](./assets/main-interface.png) | ![Reordering](./assets/reordering.png) | ![Playlist Creation](./assets/playlist-creation.png) |
+| ![Main Interface](./assets/main-interface.png) | ![Search Albums](/screenshots/search-albums.png) | ![Reordering](/screenshots/reordering.png) |
 
 ## 🧑‍💻 Getting Started
 

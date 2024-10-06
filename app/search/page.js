@@ -21,7 +21,7 @@ const SearchPage = () => {
     if (!query || !accessToken) return;
   
     try {
-      const response = await fetch(`http://localhost:3001/api/albums?query=${encodeURIComponent(query)}&accessToken=${accessToken}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/albums?query=${encodeURIComponent(query)}&accessToken=${accessToken}`);
       
       if (response.status === 401) {
         handleUnauthorized();

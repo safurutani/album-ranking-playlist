@@ -45,7 +45,7 @@ const TracksContent = () => {
     const fetchTracks = async () => {
       try {
         // Fetch the tracks first
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tracks?albumId=${albumId}&accessToken=${accessToken}`);
+        const response = await fetch(`/api/tracks?albumId=${albumId}&accessToken=${accessToken}`);
         if (!response.ok) {
           console.error('Error fetching tracks:', response.statusText);
           return;
@@ -54,7 +54,7 @@ const TracksContent = () => {
         setTracks(tracksData);
         
         // After fetching tracks, fetch the user profile
-        const userResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user-profile?accessToken=${accessToken}`);
+        const userResponse = await fetch(`/api/user-profile?accessToken=${accessToken}`);
         if (!userResponse.ok) {
           console.error('Error fetching user profile:', userResponse.statusText);
           return;
@@ -94,7 +94,7 @@ const TracksContent = () => {
     console.log('Creating playlist with order:', orderedTracks);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/create-playlist`, {
+      const response = await fetch(`/api/create-playlist`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ const TracksContent = () => {
 
   const addTracksToPlaylist = async (playlistId, orderedTracks) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/add-tracks`, {
+      const response = await fetch(`/api/add-tracks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

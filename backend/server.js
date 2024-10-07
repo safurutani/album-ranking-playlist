@@ -5,7 +5,7 @@ import cors from 'cors';
 const app = express();
 const PORT = 3001;
 app.use(cors());
-// const bodyParser = require('body-parser');
+
 // Middleware to parse JSON
 app.use(express.json());
 
@@ -30,7 +30,7 @@ app.get('/api/albums', async (req, res) => {
       }
   
       const data = await response.json();
-      console.log('Spotify API Response:', data); // Log the full response data for debugging
+      console.log('Spotify API Response:', data); 
       res.json(data.albums.items);
     } catch (err) {
       console.error('Error fetching albums:', err);

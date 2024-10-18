@@ -208,7 +208,7 @@ const TracksContent = () => {
             </Droppable>
           </DragDropContext>
         ) : (
-          <p>Loading tracks...</p>
+          <p className='mx-auto'>Loading tracks...</p>
         )}
         <br></br>
         <br></br>
@@ -232,7 +232,7 @@ const TracksContent = () => {
 
 export default function TracksPage() {
   return(
-    <Suspense fallback={<div>Loadng...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <TracksContent />
     </Suspense>
   );

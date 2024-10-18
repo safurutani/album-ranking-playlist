@@ -91,6 +91,10 @@ const TracksContent = () => {
   };
 
   const createPlaylist = async () => {
+    if (orderedTracks.length == 0) {
+      alert("Save order before creating playlist");
+      return;
+    }
     console.log('Creating playlist with order:', orderedTracks);
 
     try {

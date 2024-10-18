@@ -40,7 +40,7 @@ const SearchPage = () => {
         setAlbums(albumsData);
       } else {
         console.warn('Unexpected response structure:', albumsData);
-        setAlbums([]); // Clear albums if data is not as expected
+        setAlbums([]); 
       }
     } catch (error) {
       console.error('Error searching albums:', error);
@@ -57,7 +57,7 @@ const SearchPage = () => {
   };
 
   const handleAlbumClick = (albumId, albumName, artist, albumArt) => {
-    // Redirect to the tracks page with accessToken, albumId, and albumName in the query params
+    // Redirect to the tracks page with query params
     router.push(`/tracks?accessToken=${accessToken}&albumId=${albumId}&albumName=${encodeURIComponent(albumName)}&artist=${artist}&albumArt=${albumArt}`);
   };
 

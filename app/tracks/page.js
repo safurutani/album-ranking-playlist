@@ -61,7 +61,7 @@ const TracksContent = () => {
         }
         const userData = await userResponse.json();
         console.log(`User ID: ${userData.id}`);
-        setUserId(userData.id); // Store the userId
+        setUserId(userData.id);
   
       } catch (error) {
         console.error('Error fetching data:', error);

@@ -1,20 +1,19 @@
-export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method not allowed' });
-    }
+import { NextResponse } from 'next/server';
 
-    const { accessToken, userId, playlistName } = req.body;
+export async function POST(req) {
+    const body = await req.json();
+    const { accessToken, userId, playlistName } = body;
 
     if (!accessToken || !userId || !playlistName) {
-        return res.status(400).json({ message: 'Access token, user ID, and playlist name are required.' });
+        return NextResponse.json({ error: 'Access token, userId, and playlistName are required.' }, { status: 400 });
     }
 
     try {
         const response = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
                 name: playlistName,
@@ -23,14 +22,13 @@ export default async function handler(req, res) {
         });
 
         if (!response.ok) {
-            console.error('Error creating playlist:', response.statusText);
-            return res.status(response.status).json({ message: 'Error creating playlist' });
+            return NextResponse.json({ error: 'Failed to create playlist.' }, { status: response.status });
         }
 
         const playlistData = await response.json();
-        return res.status(200).json(playlistData);
-    } catch (err) {
-        console.error('Error creating playlist:', err);
-        return res.status(500).json({ message: 'Server error' });
+        return NextResponse.json(playlistData);
+    } catch (error) {
+        console.error('Error creating playlist:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

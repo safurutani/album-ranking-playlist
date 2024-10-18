@@ -1,16 +1,12 @@
-export default async function handler(req, res) {
-    if (req.method !== 'GET') {
-        return res.status(405).json({ message: 'Method not allowed' });
-    }
-
-    const { accessToken } = req.query;
+export async function GET(req) {
+    const { searchParams } = new URL(req.url);
+    const accessToken = searchParams.get('accessToken');
 
     if (!accessToken) {
-        return res.status(400).json({ message: 'Access token is required.' });
+        return NextResponse.json({ error: 'Access token is required.' }, { status: 400 });
     }
 
     try {
-        // Fetch user's profile data from the Spotify API
         const response = await fetch('https://api.spotify.com/v1/me', {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -18,14 +14,13 @@ export default async function handler(req, res) {
         });
 
         if (!response.ok) {
-            console.error('Error fetching user profile:', response.statusText);
-            return res.status(response.status).json({ message: 'Error fetching user profile from Spotify' });
+            return NextResponse.json({ error: 'Failed to fetch user profile.' }, { status: response.status });
         }
 
-        const data = await response.json();
-        return res.status(200).json(data);
-    } catch (err) {
-        console.error('Error fetching user profile:', err);
-        return res.status(500).json({ message: 'Server error' });
+        const userData = await response.json();
+        return NextResponse.json(userData);
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

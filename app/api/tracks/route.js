@@ -4,8 +4,7 @@ export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const albumId = searchParams.get('albumId');
   const accessToken = searchParams.get('accessToken');
-  console.log('Album ID:', albumId);
-  console.log('Access Token:', accessToken);
+
   if (!albumId || !accessToken) {
     console.error('Album ID or accessToken is missing');
     return NextResponse.json({ error: 'Album ID and accessToken are required.' }, { status: 400 });

@@ -1,35 +1,35 @@
-export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method not allowed' });
-    }
+import { NextResponse } from 'next/server';
 
-    const { accessToken, playlistId, trackIds } = req.body;
+export async function POST(req) {
+    const body = await req.json(); 
+    const { accessToken, playlistId, trackIds } = body;
 
-    if (!accessToken || !playlistId || !trackIds) {
-        return res.status(400).json({ message: 'Access token, playlist ID, and track IDs are required.' });
+    if (!accessToken || !playlistId || !Array.isArray(trackIds) || trackIds.length === 0) {
+        return NextResponse.json({ error: 'Access token, playlistId, and an array of trackIds are required.' }, { status: 400 });
     }
 
     try {
         const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-                uris: trackIds.map(id => `spotify:track:${id}`),
+                uris: trackIds.map(trackId => `spotify:track:${trackId}`),
             }),
         });
 
         if (!response.ok) {
-            console.error('Error adding tracks to playlist:', response.statusText);
-            return res.status(response.status).json({ message: 'Error adding tracks to playlist' });
+            const errorData = await response.json();
+            console.error('Error adding tracks to playlist:', errorData);
+            return NextResponse.json({ error: 'Failed to add tracks to playlist.', details: errorData }, { status: response.status });
         }
 
         const data = await response.json();
-        return res.status(200).json(data);
-    } catch (err) {
-        console.error('Error adding tracks to playlist:', err);
-        return res.status(500).json({ message: 'Server error' });
+        return NextResponse.json(data);
+    } catch (error) {
+        console.error('Error adding tracks:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

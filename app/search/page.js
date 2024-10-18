@@ -18,7 +18,9 @@ const SearchPage = () => {
   }, []);
 
   const searchAlbums = async () => {
-    if (!query || !accessToken) return;
+    if (!query || !accessToken){
+      return res.status(400).json({ error: 'Missing required parameters' });
+    }
   
     try {
       const response = await fetch(`/api/albums?query=${encodeURIComponent(query)}&accessToken=${accessToken}`);

@@ -9,7 +9,7 @@ const TracksContent = () => {
   const trackListRef = useRef(null);
   const [tracks, setTracks] = useState([]);
   const [userId, setUserId] = useState(null);
-  const [orderedTracks, setOrderedTracks] = useState([]);
+  const [orderedTracks, setOrderedTracks] = useState(null);
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -92,7 +92,7 @@ const TracksContent = () => {
 
   const createPlaylist = async () => {
     console.log(orderedTracks);
-    if (orderedTracks.length == 0) {
+    if (orderedTracks == null) {
       alert("Save order before creating playlist");
       return;
     }

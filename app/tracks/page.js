@@ -44,7 +44,7 @@ const TracksContent = () => {
 
     const fetchTracks = async () => {
       try {
-        // Fetch the tracks first
+        // Fetch the tracks
         const response = await fetch(`/api/tracks?albumId=${albumId}&accessToken=${accessToken}`);
         if (!response.ok) {
           console.error('Error fetching tracks:', response.statusText);
@@ -53,7 +53,7 @@ const TracksContent = () => {
         const tracksData = await response.json();
         setTracks(tracksData);
         
-        // After fetching tracks, fetch the user profile
+        // Fetch the user profile
         const userResponse = await fetch(`/api/user-profile?accessToken=${accessToken}`);
         if (!userResponse.ok) {
           console.error('Error fetching user profile:', userResponse.statusText);
@@ -91,6 +91,7 @@ const TracksContent = () => {
   };
 
   const createPlaylist = async () => {
+    console.log(orderedTracks);
     if (orderedTracks.length == 0) {
       alert("Save order before creating playlist");
       return;
@@ -117,7 +118,6 @@ const TracksContent = () => {
       const playlistData = await response.json();
       console.log('Playlist created:', playlistData);
 
-      // Now add the tracks to the playlist
       await addTracksToPlaylist(playlistData.id, orderedTracks);
     } catch (error) {
       console.error('Error creating playlist:', error);

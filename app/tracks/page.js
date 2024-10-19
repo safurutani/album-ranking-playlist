@@ -92,12 +92,7 @@ const TracksContent = () => {
   };
 
   const createPlaylist = async () => {
-    console.log(orderedTracks);
-    if (orderedTracks.length === 0) {
-      alert("Save order before creating playlist");
-      return;
-    }
-    console.log('Creating playlist with order:', orderedTracks);
+    saveOrder();
 
     try {
       const response = await fetch(`/api/create-playlist`, {

@@ -9,7 +9,7 @@ const TracksContent = () => {
   const trackListRef = useRef(null);
   const [tracks, setTracks] = useState([]);
   const [userId, setUserId] = useState(null);
-  const [orderedTracks, setOrderedTracks] = useState(null);
+  const [orderedTracks, setOrderedTracks] = useState([]);
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -69,7 +69,8 @@ const TracksContent = () => {
     };
     loadFont();
     fetchTracks();
-  }, [albumId, accessToken]);
+    console.log('orderedTracks: ', orderedTracks);
+  }, [albumId, accessToken, orderedTracks]);
 
   const handleOnDragEnd = (result) => {
     console.log('Drag Result:', result);
@@ -92,7 +93,7 @@ const TracksContent = () => {
 
   const createPlaylist = async () => {
     console.log(orderedTracks);
-    if (orderedTracks == null) {
+    if (orderedTracks.length === 0) {
       alert("Save order before creating playlist");
       return;
     }

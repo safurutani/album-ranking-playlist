@@ -10,6 +10,7 @@ const TracksContent = () => {
   const [tracks, setTracks] = useState([]);
   const [userId, setUserId] = useState(null);
   const [orderedTracks, setOrderedTracks] = useState([]);
+  const [newOrderSaved, setNewOrderSaved] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -80,6 +81,7 @@ const TracksContent = () => {
     const [removed] = reorderedTracks.splice(result.source.index, 1);
     reorderedTracks.splice(result.destination.index, 0, removed);
 
+    setNewOrderSaved(false);
     setTracks(reorderedTracks);
   };
 
@@ -88,11 +90,15 @@ const TracksContent = () => {
     setOrderedTracks(updatedTracks);
 
     setOrderedTracks(tracks.map((track) => track.id));
+    setNewOrderSaved(true);
     console.log('Saving order:', orderedTracks);
   };
 
   const createPlaylist = async () => {
-    saveOrder();
+    if (!newOrderSaved) {
+      alert("Please save order before creating the playlist");
+      return;
+    }
 
     try {
       const response = await fetch(`/api/create-playlist`, {

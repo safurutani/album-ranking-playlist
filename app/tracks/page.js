@@ -11,15 +11,14 @@ const TracksContent = () => {
   const [userId, setUserId] = useState(null);
   const [orderedTracks, setOrderedTracks] = useState([]);
   const [newOrderSaved, setNewOrderSaved] = useState(false);
-  const searchParams = useSearchParams();
   const router = useRouter();
-
-  // Get query parameters from the URL
+  const searchParams = useSearchParams();
   const accessToken = searchParams.get('accessToken');
-  const albumId = searchParams.get('albumId');
-  const albumName = searchParams.get('albumName');
-  const artist = searchParams.get('artist');
-  const albumArt = searchParams.get('albumArt');
+
+  const albumId = localStorage.getItem('albumId');
+  const albumName = localStorage.getItem('albumName');
+  const artist = localStorage.getItem('artist');
+  const albumArt = localStorage.getItem('albumArt');
 
   const loadFont = async () => {
     const font = new FontFace(
@@ -73,6 +72,7 @@ const TracksContent = () => {
     console.log('orderedTracks: ', orderedTracks);
   }, [albumId, accessToken, orderedTracks]);
 
+  // Updates order after track is moved
   const handleOnDragEnd = (result) => {
     console.log('Drag Result:', result);
     if (!result.destination) return;
@@ -95,6 +95,7 @@ const TracksContent = () => {
   };
 
   const createPlaylist = async () => {
+    // Prevent empty playlist
     if (!newOrderSaved) {
       alert("Please save order before creating the playlist");
       return;
@@ -109,7 +110,7 @@ const TracksContent = () => {
         body: JSON.stringify({
           accessToken: accessToken,
           userId: userId,
-          playlistName: `My ${albumName} Ranking`,
+          playlistName: `My '${albumName}' Ranking`,
         }),
       });
 
@@ -150,6 +151,7 @@ const TracksContent = () => {
       console.error('Error adding tracks to playlist:', error);
     }
   };
+
   const downloadImg = async () => {
     if (trackListRef.current === null) {
       return;
@@ -163,7 +165,7 @@ const TracksContent = () => {
       .then((dataUrl) => {
         const link = document.createElement('a');
         link.href = dataUrl;
-        link.download = 'track-order.png';
+        link.download = `${albumName} ranking.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -172,9 +174,12 @@ const TracksContent = () => {
         console.error('Failed to capture track list:', err);
       });
   }
+
   const backToSearch = () => {
-    router.push('/search');
+    e.preventDefault();
+    router.push(`/search?accessToken=${encodeURIComponent(accessToken)}`);
   }
+
   return (
     <div className='m-auto align-center content-center min-w-96'>
       <div ref={trackListRef} className='h-full font-fredoka'>

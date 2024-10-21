@@ -2,24 +2,20 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-const SearchPage = () => {
+const SearchContent = () => {
   const router = useRouter();
   const [albums, setAlbums] = useState([]);
   const [query, setQuery] = useState('');
-  const [accessToken, setAccessToken] = useState(null);
-
-  // Get the accessToken from URL parameters once the component is mounted
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      setAccessToken(urlParams.get('accessToken'));
-    }
-  }, []);
+  const searchParams = useSearchParams();
+  const accessToken = searchParams.get('accessToken');
 
   const searchAlbums = async () => {
     if (!query || !accessToken){
-      return res.status(400).json({ error: 'Missing required parameters' });
+      alert('Missing required parameters');
+      return;
     }
   
     try {
@@ -57,8 +53,14 @@ const SearchPage = () => {
   };
 
   const handleAlbumClick = (albumId, albumName, artist, albumArt) => {
-    // Redirect to the tracks page with query params
-    router.push(`/tracks?accessToken=${accessToken}&albumId=${albumId}&albumName=${encodeURIComponent(albumName)}&artist=${artist}&albumArt=${albumArt}`);
+    // Store album data in localStorage
+    localStorage.setItem('albumId', albumId);
+    localStorage.setItem('albumNam', albumName);
+    localStorage.setItem('artist', artist);
+    localStorage.setItem('albumArt', albumArt);
+
+    // Redirect to the tracks page
+    router.replace(`/tracks`);
   };
 
   const handleUnauthorized = () => {
@@ -95,4 +97,10 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default function SearchPage() {
+  return(
+    <Suspense fallback={<div></div>}>
+      <SearchContent />
+    </Suspense>
+  );
+};

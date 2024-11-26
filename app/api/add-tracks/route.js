@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { useAppContext } from '@/app/AppContext';
 
 export async function POST(req) {
     

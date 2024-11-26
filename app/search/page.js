@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { parseCookies } from 'nookies';
+import { parseCookies } from 'cookies';
 
 const SearchPage = () => {
   const cookies = parseCookies(context);

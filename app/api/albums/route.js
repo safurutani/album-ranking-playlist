@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { useAppContext } from '@/app/AppContext';
 
 export async function GET(request) {
     const url = new URL(request.url);

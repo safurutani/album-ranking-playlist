@@ -2,20 +2,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { parseCookies } from 'nookies';
 
 const SearchPage = () => {
+  const cookies = parseCookies(context);
+  const accessToken = cookies.accessToken || null;
   const router = useRouter();
   const [albums, setAlbums] = useState([]);
   const [query, setQuery] = useState('');
-  const [accessToken, setAccessToken] = useState(null);
-
-  // Get the accessToken from URL parameters once the component is mounted
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      setAccessToken(urlParams.get('accessToken'));
-    }
-  }, []);
 
   const searchAlbums = async () => {
     if (!query || !accessToken){

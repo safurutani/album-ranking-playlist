@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
+import { useAppContext } from '@/app/AppContext';
 
 export async function GET(request) {
     const url = new URL(request.url);
     const query = url.searchParams.get('query');
     const accessToken = url.searchParams.get('accessToken');
+
   
     if (!query || !accessToken) {
       return NextResponse.json({ error: 'Query and accessToken are required.' }, { status: 400 });

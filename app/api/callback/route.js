@@ -26,17 +26,17 @@ export async function GET(request) {
     }),
   });
 
-  const tokenData = await tokenResponse.json();
+  const tokenData = await tokenResponse().json();
 
   if (tokenResponse.ok) {
     const accessToken = tokenData.access_token;
 
-    // Redirect to the search page with the access token as a query parameter
-    const searchUrl = new URL('/search', request.url);
-    searchUrl.searchParams.set('accessToken', accessToken);
-    
-    return NextResponse.redirect(searchUrl);
-  } else {
-    return NextResponse.json({ error: tokenData.error || 'Failed to obtain access token.' }, { status: 400 });
+    // Redirect to the search page with the access token in cookies
+    const response = NextResponse.redirect('/search');
+    response.cookies.set('accessToken', accessToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+    return response;
+  } 
+  else {
+      return NextResponse.json({ error: tokenData.error || 'Failed to obtain access token.' }, { status: 400 });
   }
 }

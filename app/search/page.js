@@ -1,29 +1,25 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import { useAppContext } from '../AppContext';
 
 const SearchPage = () => {
   const router = useRouter();
   const [albums, setAlbums] = useState([]);
-  const [query, setQuery] = useState('');
-  const [accessToken, setAccessToken] = useState(null);
-
-  // Get the accessToken from URL parameters once the component is mounted
+  const {setAlbumId} = useAppContext();
+  const {setAlbumName} = useAppContext();
+  const {setArtist} = useAppContext();
+  const {setAlbumArt} = useAppContext();
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      setAccessToken(urlParams.get('accessToken'));
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('accessToken')) {
+      params.delete('accessToken');
+      router.replace({ pathname: '/search' });
     }
-  }, []);
-
+  }, [router]);
   const searchAlbums = async () => {
-    if (!query || !accessToken){
-      return res.status(400).json({ error: 'Missing required parameters' });
-    }
-  
     try {
-      const response = await fetch(`/api/albums?query=${encodeURIComponent(query)}&accessToken=${accessToken}`);
+      const response = await fetch(`/api/albums`);
       
       if (response.status === 401) {
         handleUnauthorized();
@@ -50,15 +46,16 @@ const SearchPage = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (accessToken == null) {
-      handleUnauthorized();
-    }
     searchAlbums();
   };
 
   const handleAlbumClick = (albumId, albumName, artist, albumArt) => {
-    // Redirect to the tracks page with query params
-    router.push(`/tracks?accessToken=${accessToken}&albumId=${albumId}&albumName=${encodeURIComponent(albumName)}&artist=${artist}&albumArt=${albumArt}`);
+    setAlbumId(albumId);
+    setAlbumName(albumName);
+    setArtist(artist);
+    setAlbumArt(albumArt);
+    // Redirect to the tracks page
+    router.push(`/tracks`);
   };
 
   const handleUnauthorized = () => {
@@ -73,8 +70,6 @@ const SearchPage = () => {
       <form onSubmit={handleSearch} className='text-center align-middle'>
         <input
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
           placeholder="Enter an album"
           className='my-4 p-2 rounded-lg w-80 focus:outline-none border-2 border-searchOutline text-black'
         />

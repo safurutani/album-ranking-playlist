@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(req) {
+    const cookieStore = await cookies();
     const body = await req.json(); 
     const { accessToken, playlistId, trackIds } = body;
 

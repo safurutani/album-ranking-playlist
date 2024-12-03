@@ -2,24 +2,18 @@
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { toPng } from 'html-to-image';
 import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
+import { useAppContext } from '../AppContext';
 const TracksContent = () => {
   const trackListRef = useRef(null);
   const [tracks, setTracks] = useState([]);
   const [userId, setUserId] = useState(null);
   const [orderedTracks, setOrderedTracks] = useState([]);
-  const [newOrderSaved, setNewOrderSaved] = useState(false);
-  const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Get query parameters from the URL
-  const accessToken = searchParams.get('accessToken');
-  const albumId = searchParams.get('albumId');
-  const albumName = searchParams.get('albumName');
-  const artist = searchParams.get('artist');
-  const albumArt = searchParams.get('albumArt');
+  const albumName = useAppContext();
+  const artist = useAppContext();
+  const albumArt = useAppContext();
 
   const loadFont = async () => {
     const font = new FontFace(
@@ -40,13 +34,11 @@ const TracksContent = () => {
   };
 
   useEffect(() => {
-    
-    if (!albumId || !accessToken) return;
 
     const fetchTracks = async () => {
       try {
-        // Fetch the tracks
-        const response = await fetch(`/api/tracks?albumId=${albumId}&accessToken=${accessToken}`);
+        // Fetch the tracks first
+        const response = await fetch(`/api/tracks`);
         if (!response.ok) {
           console.error('Error fetching tracks:', response.statusText);
           return;
@@ -54,8 +46,8 @@ const TracksContent = () => {
         const tracksData = await response.json();
         setTracks(tracksData);
         
-        // Fetch the user profile
-        const userResponse = await fetch(`/api/user-profile?accessToken=${accessToken}`);
+        // After fetching tracks, fetch the user profile
+        const userResponse = await fetch(`/api/user-profile`);
         if (!userResponse.ok) {
           console.error('Error fetching user profile:', userResponse.statusText);
           return;
@@ -70,8 +62,7 @@ const TracksContent = () => {
     };
     loadFont();
     fetchTracks();
-    console.log('orderedTracks: ', orderedTracks);
-  }, [albumId, accessToken, orderedTracks]);
+  }, []);
 
   const handleOnDragEnd = (result) => {
     console.log('Drag Result:', result);
@@ -107,7 +98,6 @@ const TracksContent = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          accessToken: accessToken,
           userId: userId,
           playlistName: `My ${albumName} Ranking`,
         }),
@@ -134,7 +124,6 @@ const TracksContent = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          accessToken: accessToken,
           playlistId: playlistId,
           trackIds: orderedTracks,
         }),

@@ -3,11 +3,9 @@ import { NextResponse } from 'next/server';
 export async function GET(request) {
   const url = new URL(request.url);
   const code = url.searchParams.get('code');
-
   if (!code) {
     return NextResponse.json({ error: 'Authorization code not found.' }, { status: 400 });
   }
-
   const client_id = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
   const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
   const redirect_uri =process.env.NEXT_PUBLIC_REDIRECT_URI;
@@ -26,17 +24,15 @@ export async function GET(request) {
     }),
   });
 
-  const tokenData = await tokenResponse.json();
+  const tokenData = await tokenResponse().json();
 
   if (tokenResponse.ok) {
     const accessToken = tokenData.access_token;
-
-    // Redirect to the search page with the access token as a query parameter
-    const searchUrl = new URL('/search', request.url);
-    searchUrl.searchParams.set('accessToken', accessToken);
-    
-    return NextResponse.redirect(searchUrl);
-  } else {
-    return NextResponse.json({ error: tokenData.error || 'Failed to obtain access token.' }, { status: 400 });
+    const response = NextResponse.redirect('/search');
+    response.cookies.set('accessToken', accessToken, { httpOnly: true, path:'/', secure: process.env.NODE_ENV === 'production', maxAge: 60 * 60 * 24 });
+    return response;
+  } 
+  else {
+      return NextResponse.json({ error: tokenData.error || 'Failed to obtain access token.' }, { status: 400 });
   }
 }

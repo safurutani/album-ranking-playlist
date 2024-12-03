@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
-
+import { cookies } from 'next/headers';
 export async function GET(request) {
-    const url = new URL(request.url);
-    const query = url.searchParams.get('query');
-    const accessToken = url.searchParams.get('accessToken');
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get('accessToken')?.value;
   
-    if (!query || !accessToken) {
+    if (!accessToken) {
       return NextResponse.json({ error: 'Query and accessToken are required.' }, { status: 400 });
     }
   

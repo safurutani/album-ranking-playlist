@@ -92,8 +92,6 @@ const SearchContent = () => {
 
 export default function SearchPage() {
   return(
-    <Suspense fallback={<div></div>}>
       <SearchContent />
-    </Suspense>
   );
 };

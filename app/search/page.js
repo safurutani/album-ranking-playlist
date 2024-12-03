@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppContext } from '../AppContext';
 
-const SearchPage = () => {
+const SearchContent = () => {
   const router = useRouter();
   const [albums, setAlbums] = useState([]);
   const {setAlbumId} = useAppContext();
@@ -90,4 +90,10 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default function SearchPage() {
+  return(
+    <Suspense fallback={<div></div>}>
+      <SearchContent />
+    </Suspense>
+  );
+};

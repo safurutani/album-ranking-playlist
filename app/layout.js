@@ -1,7 +1,7 @@
 import "./globals.css";
 import { AppProvider } from "./AppContext";
 export const metadata = {
-  title: "Ranked Album Playlist",
+  title: "Album Ranking Playlist Generator",
   description: "Create an album ranking and turn it into a playlist on Spotify",
 };
 

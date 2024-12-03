@@ -24,7 +24,7 @@ export async function GET(request) {
     }),
   });
 
-  const tokenData = await tokenResponse().json();
+  const tokenData = await tokenResponse.json();
 
   if (tokenResponse.ok) {
     const accessToken = tokenData.access_token;

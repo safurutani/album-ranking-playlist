@@ -167,7 +167,7 @@ const TracksContent = () => {
 
   const backToSearch = () => {
     e.preventDefault();
-    router.push(`/search?accessToken=${encodeURIComponent(accessToken)}`);
+    router.push(`/search`);
   }
 
   return (

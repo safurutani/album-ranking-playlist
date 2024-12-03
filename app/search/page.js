@@ -6,16 +6,25 @@ import { useAppContext } from '../AppContext';
 const SearchContent = () => {
   const router = useRouter();
   const [albums, setAlbums] = useState([]);
-  const {setAlbumId} = useAppContext();
-  const {setAlbumName} = useAppContext();
-  const {setArtist} = useAppContext();
-  const {setAlbumArt} = useAppContext();
+  const {setAlbumId, setAlbumName, setArtist, setAlbumArt} = useAppContext();
+
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('accessToken')) {
-      params.delete('accessToken');
-      router.replace({ pathname: '/search' });
-    }
+    const fetchAlbums = async () => {
+      const response = await fetch('/api/albums');
+      if (!response.ok) {
+        if (response.status === 401) {
+          alert("Session Timed Out - Please log in again");
+          router.push('/');
+        } else {
+          console.error('Error fetching albums:', response.statusText);
+        }
+      } else {
+        const albumsData = await response.json();
+        setAlbums(albumsData);
+      }
+    };
+
+    fetchAlbums();
   }, [router]);
   const searchAlbums = async () => {
     try {

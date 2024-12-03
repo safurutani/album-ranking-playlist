@@ -29,7 +29,12 @@ export async function GET(request) {
   if (tokenResponse.ok) {
     const accessToken = tokenData.access_token;
     const response = NextResponse.redirect('/search');
-    response.cookies.set('accessToken', accessToken, { httpOnly: true, path:'/', secure: process.env.NODE_ENV === 'production', maxAge: 60 * 60 * 24 });
+    response.cookies.set('accessToken', accessToken, { 
+      httpOnly: true, 
+      path:'/', 
+      secure: true, 
+      maxAge: 60 * 60 * 24 
+    });
     return response;
   } 
   else {

@@ -233,8 +233,6 @@ const TracksContent = () => {
 
 export default function TracksPage() {
   return(
-    <Suspense fallback={<div>Loading...</div>}>
       <TracksContent />
-    </Suspense>
   );
 };

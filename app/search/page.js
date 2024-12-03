@@ -90,6 +90,31 @@ const SearchContent = () => {
   );
 };
 
+export async function getServerSideProps(context) {
+  const cookies = context.req.cookies;
+  const token = cookies.accessToken;
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }
+
+  const res = await fetch('https://api.spotify.com/v1/albums', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  const albums = await res.json();
+  return {
+    props: {
+      intialAlbums: albums.items || []
+    }
+  };
+}
 export default function SearchPage() {
   return(
       <SearchContent />

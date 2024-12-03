@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 export async function GET(req) {
-    const { searchParams } = new URL(req.url);
-    const accessToken = searchParams.get('accessToken');
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get('accessToken')?.value;
 
     if (!accessToken) {
         return NextResponse.json({ error: 'Access token is required.' }, { status: 400 });
@@ -19,6 +20,7 @@ export async function GET(req) {
         }
 
         const userData = await response.json();
+        response.cookies.set('userProfile', userData);
         return NextResponse.json(userData);
     } catch (error) {
         console.error('Error fetching user profile:', error);

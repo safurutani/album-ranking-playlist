@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
-
+import { cookies } from 'next/headers';
 export async function POST(req) {
-    const body = await req.json();
-    const { accessToken, userId, playlistName } = body;
-
-    if (!accessToken || !userId || !playlistName) {
-        return NextResponse.json({ error: 'Access token, userId, and playlistName are required.' }, { status: 400 });
+    //const body = await req.json();
+    //const { accessToken, userId, playlistName } = body;
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get('accessToken')?.value;
+    if (!accessToken) {
+        return NextResponse.json({ error: 'Access token is required.' }, { status: 400 });
     }
 
     try {

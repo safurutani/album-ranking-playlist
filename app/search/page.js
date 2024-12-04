@@ -28,7 +28,7 @@ const SearchContent = () => {
   }, [router]);
   const searchAlbums = async () => {
     try {
-      const response = await fetch(`/api/albums`);
+      const response = await fetch(`/api/albums?query=${encodeURIComponent(query)}`);
       
       if (response.status === 401) {
         handleUnauthorized();

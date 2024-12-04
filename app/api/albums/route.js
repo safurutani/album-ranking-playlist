@@ -4,7 +4,7 @@ export async function GET(request) {
     const cookiesInstance = cookies();
     const url = new URL(request.url);
     const query = url.searchParams.get('query');
-    const accessToken = cookiesInstance.get('accessToken');
+    const accessToken = cookiesInstance.get('accessToken')?.value;
 
     if (!accessToken) {
       return NextResponse.json({ error: 'Unauthorized - no token.' }, { status: 401 });
@@ -30,17 +30,5 @@ export async function GET(request) {
       console.error('Error fetching albums:', err);
       return NextResponse.json({ error: 'Server error' }, { status: 500 });
     }
-    /*
-    const response = await fetch(`https://api.spotify.com/v1/albums`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-      });
-      if (!response.ok) {
-        return NextResponse.json({error: 'Failed to fetch albums'}, {status: 400});
-      }
-      const data = await response.json();
-      */
-      return NextResponse.json(data.albums.items, {status: 200});
   }
   

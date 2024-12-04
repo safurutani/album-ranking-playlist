@@ -9,44 +9,20 @@ const SearchContent = () => {
   const [query, setQuery] = useState('');
   const {setAlbumId, setAlbumName, setArtist, setAlbumArt} = useAppContext();
 
-  useEffect(() => {
-    const fetchAlbums = async () => {
-      const response = await fetch(`/api/albums?query=${encodeURIComponent(query)}`);
-      if (!response.ok) {
-        if (response.status === 401) {
-          alert("Session Timed Out - Please log in again");
-          router.push('/');
-        } else {
-          console.error('Error fetching albums:', response.statusText);
-        }
-      } else {
-        const albumsData = await response.json();
-        setAlbums(albumsData);
-      }
-    };
-
-    fetchAlbums();
-  }, [router]);
   const searchAlbums = async () => {
     try {
-      const response = await fetch(`/api/albums?query=${encodeURIComponent(query)}`);
-      
+      const response = await fetch(`/api/albums?query=${query}`);
       if (response.status === 401) {
-        handleUnauthorized();
-        return null;
-      }
-      else if (!response.ok) {
-        console.error('Error fetching albums:', response.statusText);
+        alert("Session Timed Out - Please log in again");
+        router.push('/'); // redirect to login page if unauthorized
         return;
       }
       const albumsData = await response.json();
-      
-      // Check if the data structure is correct
       if (Array.isArray(albumsData)) {
         setAlbums(albumsData);
       } else {
         console.warn('Unexpected response structure:', albumsData);
-        setAlbums([]); 
+        setAlbums([]);
       }
     } catch (error) {
       console.error('Error searching albums:', error);

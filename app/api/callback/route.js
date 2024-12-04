@@ -28,7 +28,8 @@ export async function GET(request) {
 
   if (tokenResponse.ok) {
     const accessToken = tokenData.access_token;
-    const response = NextResponse.redirect('/search');
+    const baseUrl = new URL(request.url).origin;
+    const response = NextResponse.redirect(`${baseUrl/search}`);
     response.cookies.set('accessToken', accessToken, { 
       httpOnly: true, 
       path:'/', 

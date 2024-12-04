@@ -6,8 +6,8 @@ export async function GET(request) {
     const query = url.searchParams.get('query');
     const accessToken = cookiesInstance.get('accessToken')?.value;
 
-    if (!accessToken) {
-      return NextResponse.json({ error: 'Unauthorized - no token.' }, { status: 401 });
+    if (!accessToken || !query) {
+      return NextResponse.json({ error: 'Token and query required.' }, { status: 401 });
     }
     try {
       

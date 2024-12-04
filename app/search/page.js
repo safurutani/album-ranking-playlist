@@ -10,7 +10,7 @@ const SearchContent = () => {
 
   useEffect(() => {
     const fetchAlbums = async () => {
-      const response = await fetch('/api/albums');
+      const response = await fetch(`/api/albums?query=${encodeURIComponent(query)}`);
       if (!response.ok) {
         if (response.status === 401) {
           alert("Session Timed Out - Please log in again");

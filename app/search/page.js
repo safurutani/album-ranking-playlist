@@ -6,6 +6,7 @@ import { useAppContext } from '../AppContext';
 const SearchContent = () => {
   const router = useRouter();
   const [albums, setAlbums] = useState([]);
+  const [query, setQuery] = useState('');
   const {setAlbumId, setAlbumName, setArtist, setAlbumArt} = useAppContext();
 
   useEffect(() => {
@@ -80,6 +81,8 @@ const SearchContent = () => {
         <input
           type="text"
           placeholder="Enter an album"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           className='my-4 p-2 rounded-lg w-80 focus:outline-none border-2 border-searchOutline text-black'
         />
         <button type="submit" className='rounded-lg ml-4 border-2 border-searchOutline p-2 text-resultText hover:bg-searchHover hover:text-searchTextHover hover:border-searchHover'>Search</button>

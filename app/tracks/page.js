@@ -50,6 +50,7 @@ const TracksContent = () => {
           return;
         }
         const tracksData = await response.json();
+        console.log('Tracks data:', tracksData);
         setTracks(tracksData);
         
         // After fetching tracks, fetch the user profile

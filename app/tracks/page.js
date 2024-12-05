@@ -41,8 +41,9 @@ const TracksContent = () => {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-          },
-            body: JSON.stringify({albumId: albumId})}
+            },
+            body: JSON.stringify({albumId: albumId})
+          }
         );
         if (!response.ok) {
           console.error('Error fetching tracks:', response.statusText);

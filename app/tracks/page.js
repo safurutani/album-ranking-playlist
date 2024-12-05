@@ -11,7 +11,7 @@ const TracksContent = () => {
   const [orderedTracks, setOrderedTracks] = useState([]);
   const router = useRouter();
 
-  const [albumId, albumName, artist, albumArt] = useAppContext();
+  const {albumId, albumName, artist, albumArt} = useAppContext();
 
   const loadFont = async () => {
     const font = new FontFace(

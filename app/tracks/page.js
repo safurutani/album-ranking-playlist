@@ -99,7 +99,6 @@ const TracksContent = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: userId,
           playlistName: `My '${albumName}' Ranking`,
         }),
       });

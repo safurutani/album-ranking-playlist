@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 export async function POST(req) {
-    //const body = await req.json();
-    //const { accessToken, userId, playlistName } = body;
+    const body = await req.json();
+    const { playlistName } = body;
     const cookieStore = await cookies();
     const accessToken = cookieStore.get('accessToken')?.value;
+    const userId = cookieStore.get('userProfile')?.value;
     if (!accessToken) {
         return NextResponse.json({ error: 'Access token is required.' }, { status: 400 });
     }

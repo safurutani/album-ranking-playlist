@@ -20,8 +20,11 @@ export async function GET(req) {
         }
 
         const userData = await response.json();
-        response.cookies.set('userProfile', userData);
-        return NextResponse.json(userData);
+        cookieStore.set('userProfile', userData.id, {
+            httpOnly: true,
+            secure: true
+        });
+        return NextResponse.json(userData.id);
     } catch (error) {
         console.error('Error fetching user profile:', error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

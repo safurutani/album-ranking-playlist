@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(req) {
-    const cookieStore = await cookies();
+    const cookieStore = cookies();
+    const accessToken = cookieStore.get('accessToken')?.value;
     const body = await req.json(); 
-    const { accessToken, playlistId, trackIds } = body;
+    const { playlistId, trackIds } = body;
+
 
     if (!accessToken || !playlistId || !Array.isArray(trackIds) || trackIds.length === 0) {
         return NextResponse.json({ error: 'Access token, playlistId, and an array of trackIds are required.' }, { status: 400 });

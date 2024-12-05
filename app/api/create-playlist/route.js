@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 export async function POST(req) {
     const body = await req.json();
     const { playlistName } = body;
-    const cookieStore = await cookies();
+    const cookieStore = cookies();
     const accessToken = cookieStore.get('accessToken')?.value;
     const userId = cookieStore.get('userProfile')?.value;
     if (!accessToken) {

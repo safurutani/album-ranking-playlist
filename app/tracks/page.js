@@ -32,7 +32,7 @@ const TracksContent = () => {
   };
 
   useEffect(() => {
-
+    if (!albumId) return;
     const fetchTracks = async () => {
       try {
         // Fetch the tracks first

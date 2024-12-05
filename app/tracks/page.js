@@ -60,7 +60,7 @@ const TracksContent = () => {
     };
     loadFont();
     fetchTracks();
-  }, []);
+  }, [albumId]);
 
   // Updates order after track is moved
   const handleOnDragEnd = (result) => {

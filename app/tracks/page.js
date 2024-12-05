@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef, Suspense } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { toPng } from 'html-to-image';
 import { useRouter } from 'next/navigation';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -42,7 +42,7 @@ const TracksContent = () => {
             headers: {
               'Content-Type': 'application/json',
           },
-            body: JSON.stringify({albumId})}
+            body: JSON.stringify({albumId: albumId})}
         );
         if (!response.ok) {
           console.error('Error fetching tracks:', response.statusText);

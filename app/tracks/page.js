@@ -9,6 +9,7 @@ const TracksContent = () => {
   const [tracks, setTracks] = useState([]);
   const [userId, setUserId] = useState(null);
   const [orderedTracks, setOrderedTracks] = useState([]);
+  const [newOrderSaved, setNewOrderSaved] = useState(false);
   const router = useRouter();
 
   const {albumId, albumName, artist, albumArt} = useAppContext();

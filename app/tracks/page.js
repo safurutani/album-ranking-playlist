@@ -36,15 +36,7 @@ const TracksContent = () => {
     const fetchTracks = async () => {
       try {
         // Fetch the tracks first
-        const response = await fetch(`/api/tracks`, 
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({albumId: albumId})
-          }
-        );
+        const response = await fetch(`/api/tracks?albumId=${albumId}`);
         if (!response.ok) {
           console.error('Error fetching tracks:', response.statusText);
           return;

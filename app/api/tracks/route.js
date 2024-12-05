@@ -4,8 +4,8 @@ import { cookies } from 'next/headers';
 export async function GET(req) {
   const cookiesInstance = cookies();
   const accessToken = cookiesInstance.get('accessToken')?.value;
-  const {albumId} = await req.json();
-  console.log('Album ID:', albumId);
+  const {searchParams} = new URL(req.url);
+  const albumId = searchParams.get('albumId');
 
   if (!accessToken) {
     return NextResponse.json({error: 'Unauthroized token'}, {status: 401});

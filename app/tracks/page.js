@@ -11,9 +11,7 @@ const TracksContent = () => {
   const [orderedTracks, setOrderedTracks] = useState([]);
   const router = useRouter();
 
-  const albumName = useAppContext();
-  const artist = useAppContext();
-  const albumArt = useAppContext();
+  const [albumId, albumName, artist, albumArt] = useAppContext();
 
   const loadFont = async () => {
     const font = new FontFace(
@@ -38,7 +36,14 @@ const TracksContent = () => {
     const fetchTracks = async () => {
       try {
         // Fetch the tracks first
-        const response = await fetch(`/api/tracks`);
+        const response = await fetch(`/api/tracks`, 
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+          },
+            body: JSON.stringify({albumId})}
+        );
         if (!response.ok) {
           console.error('Error fetching tracks:', response.statusText);
           return;

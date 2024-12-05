@@ -14,7 +14,7 @@ const SearchContent = () => {
       const response = await fetch(`/api/albums?query=${query}`);
       if (response.status === 401) {
         alert("Session Timed Out - Please log in again");
-        router.push('/'); // redirect to login page if unauthorized
+        router.push('/');
         return;
       }
       const albumsData = await response.json();
@@ -40,13 +40,11 @@ const SearchContent = () => {
     setAlbumName(albumName);
     setArtist(artist);
     setAlbumArt(albumArt);
-    // Redirect to the tracks page
     router.push(`/tracks`);
   };
 
   const handleUnauthorized = () => {
     alert("Session Timed Out - Please log in again");
-    // Redirect to the login page
     router.push('/');
   };
 

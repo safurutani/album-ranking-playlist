@@ -45,7 +45,6 @@ const TracksContent = () => {
         console.log('Tracks data:', tracksData);
         setTracks(tracksData);
         
-        // After fetching tracks, fetch the user profile
         const userResponse = await fetch(`/api/user-profile`);
         if (!userResponse.ok) {
           console.error('Error fetching user profile:', userResponse.statusText);

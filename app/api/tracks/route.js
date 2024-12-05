@@ -8,7 +8,7 @@ export async function GET(req) {
   const albumId = searchParams.get('albumId');
 
   if (!accessToken) {
-    return NextResponse.json({error: 'Unauthroized token'}, {status: 401});
+    return NextResponse.json({error: 'Unauthorized token'}, {status: 401});
   }
   if (!albumId) {
     return NextResponse.json({ error: 'albumId not found' }, { status: 400 });

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { toPng } from 'html-to-image';
 import { useRouter } from 'next/navigation';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Bars } from "react-loader-spinner";
 import { useAppContext } from '../AppContext';
 const TracksContent = () => {
   const trackListRef = useRef(null);
@@ -169,7 +170,7 @@ const TracksContent = () => {
       <div ref={trackListRef} className='h-full font-fredoka'>
         <h1 className='text-center text-4xl mt-16'>{albumName} - {(artist)}</h1>
         <img className='mx-auto my-4' src={albumArt} alt='Album cover art' width={160}></img>
-        {tracks.length > 0 ? (
+        {tracks.length < 0 ? (
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="droppable">
               {(provided) => (
@@ -203,7 +204,10 @@ const TracksContent = () => {
             </Droppable>
           </DragDropContext>
         ) : (
-          <p className='mx-auto'>Loading tracks...</p>
+          <div className='flex justify-center'>
+            <Bars color="#e5e7eb" height={40} width={50} />
+          </div>
+          
         )}
         <br></br>
         <br></br>

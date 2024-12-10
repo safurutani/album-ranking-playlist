@@ -7,7 +7,6 @@ import { useAppContext } from '../AppContext';
 const TracksContent = () => {
   const trackListRef = useRef(null);
   const [tracks, setTracks] = useState([]);
-  const [userId, setUserId] = useState(null);
   const [orderedTracks, setOrderedTracks] = useState([]);
   const [newOrderSaved, setNewOrderSaved] = useState(false);
   const router = useRouter();
@@ -51,9 +50,6 @@ const TracksContent = () => {
           console.error('Error fetching user profile:', userResponse.statusText);
           return;
         }
-        const userData = await userResponse.json();
-        console.log(`User ID: ${userData.id}`);
-        setUserId(userData.id);
   
       } catch (error) {
         console.error('Error fetching data:', error);

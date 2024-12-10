@@ -12,6 +12,7 @@
   --tertiary: #7b6f96;
   --searchOutline:var(--secondary);
   --resultText: black;
+  --trackDrag: var(--tertiary);
   --searchHover: var(--tertiary);
   --searchTextHover: white;
   --buttonBg: white;
@@ -47,6 +48,7 @@
     --tertiary: #7b6f96;
     --searchOutline: white;
     --resultText: white;
+    --trackDrag: var(--accent);
     --searchHover: var(--accent);
     --searchTextHover: black;
     --buttonBg: var(--tertiary);

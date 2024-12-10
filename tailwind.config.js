@@ -26,6 +26,7 @@ module.exports = {
         'buttonHoverOutline': 'var(--buttonHoverOutline)',
         'home': 'var(--home)',
         'title': 'var(--title)',
+        'trackDrag': 'var(--trackDrag)',
       },
       fontFamily: {
         fredoka: ["Fredoka", "sans-serif"],

@@ -170,7 +170,7 @@ const TracksContent = () => {
       <div ref={trackListRef} className='h-full font-fredoka'>
         <h1 className='text-center text-4xl mt-16'>{albumName} - {(artist)}</h1>
         <img className='mx-auto my-4' src={albumArt} alt='Album cover art' width={160}></img>
-        {tracks.length < 0 ? (
+        {tracks.length > 0 ? (
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="droppable">
               {(provided) => (

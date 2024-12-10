@@ -12,7 +12,7 @@
   --tertiary: #7b6f96;
   --searchOutline:var(--secondary);
   --resultText: black;
-  --trackDrag: var(--tertiary);
+  --trackDrag: #D3CDE4;
   --searchHover: var(--tertiary);
   --searchTextHover: white;
   --buttonBg: white;

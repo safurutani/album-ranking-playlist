@@ -187,7 +187,7 @@ const TracksContent = () => {
                             margin: '5px',
                             border: '1px solid #ccc',
                             borderRadius: '5px',
-                            backgroundColor: snapshot.isDragging ? 'var(--accent)' : '#f9f9f9',
+                            backgroundColor: snapshot.isDragging ? 'var(--trackDrag)' : '#f9f9f9',
                             ...provided.draggableProps.style,
                             userSelect: 'none',
                             color: 'black',

@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className='home flex h-screen font-fredoka max-sm:min-w-96'>
       <div className='home-column w-1/2 h-full content-center bg-title'>
-        <h1 className='text-6xl sm:text-right text-center pr-8 max-w-1/2'>Ranked Album Playlist Generator</h1>
+        <h1 className='text-6xl sm:text-right text-center pr-8 max-w-1/2'>Ranked<br/>Album Playlist<br/>Generator</h1>
       </div>
       <div className='w-1/2 bg-home h-full content-center pl-8 align-middle max-sm:w-full max-sm:py-8'>
         <div className='feature-container'>
